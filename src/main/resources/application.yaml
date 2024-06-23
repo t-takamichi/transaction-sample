@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: transaction-sample
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test;DB_CLOSE_ON_EXIT=TRUE;MODE=MySQL
+    username: sa
+    password: sample
+  h2:
+    #H2DB
+    console.enabled: true
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data-h2.sql
