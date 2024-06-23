@@ -21,7 +21,7 @@ public class VocabularyServiceTest {
         } catch (RuntimeException e) {
             // Nothing
         }
-        Assertions.assertEquals("クルマ", vocabularyService.get("car").getMean());
+        Assertions.assertEquals("車", vocabularyService.get("car").getMean());
     }
     @Test
     public void testOK2() {

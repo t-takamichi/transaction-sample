@@ -28,8 +28,8 @@ public class VocabularyService {
         vocabularyEntity.setName(vocabularyDto.getName());
         vocabularyEntity.setMean(vocabularyDto.getMean());
         vocabularyRepository.update(vocabularyEntity).get();
-//      throw new RuntimeException("aaa");
-        return null;
+        throw new RuntimeException("aaa");
+//        return null;
     }
     @Transactional
     public VocabularyDto save(VocabularyDto vocabularyDto) {
