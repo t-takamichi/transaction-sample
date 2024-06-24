@@ -11,7 +11,7 @@ public class VocabularyDto {
     private final Long id;
     private String name;
     private String example;
-    private String mean;
+    private String meaning;
     private final Date createdAt;
     private final Date updatedAt;
 }

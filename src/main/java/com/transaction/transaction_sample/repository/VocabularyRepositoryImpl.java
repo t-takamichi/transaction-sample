@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -17,11 +16,11 @@ public class VocabularyRepositoryImpl implements VocabularyRepository {
     @Override
     public Optional<VocabularyEntity> findByName(String name) {
         Optional<VocabularyEntity> vocabularyEntity= jdbcClient.sql("""
-                    SELECT id, name, mean, example, created_at, updated_at
+                    SELECT id, name, meaning, example, created_at, updated_at
                     FROM VOCABULARY 
-                    WHERE name = ?
+                    WHERE name = :name
                     """)
-                .param(name)
+                .param("name", name)
                 .query(new DataClassRowMapper<>(VocabularyEntity.class))
                 .optional();
         return vocabularyEntity;
@@ -30,11 +29,11 @@ public class VocabularyRepositoryImpl implements VocabularyRepository {
     @Override
     public Optional<VocabularyEntity> findById(Long id) {
         Optional<VocabularyEntity> vocabularyEntity= jdbcClient.sql("""
-                    SELECT id, name, mean, example, created_at, updated_at
+                    SELECT id, name, meaning, example, created_at, updated_at
                     FROM VOCABULARY 
-                    WHERE id = ?
+                    WHERE id = :id
                     """)
-                .param(id)
+                .param("id", id)
                 .query(new DataClassRowMapper<>(VocabularyEntity.class))
                 .optional();
         return vocabularyEntity;
@@ -43,15 +42,12 @@ public class VocabularyRepositoryImpl implements VocabularyRepository {
     @Override
     public Optional<VocabularyEntity> insert(VocabularyEntity vocabularyEntity) {
         jdbcClient.sql("""
-                    INSERT INTO VOCABULARY(name,mean,example) VALUES(?,?,?)
+                    INSERT INTO VOCABULARY(name,meaning,example) VALUES(:name, :meaning, :example)
                     """)
-                .params(
-                        List.of(
-                                vocabularyEntity.getName(),
-                                vocabularyEntity.getMean(),
-                                vocabularyEntity.getExample()
-                                )
-                ).update();
+                .param("name", vocabularyEntity.getName())
+                .param("meaning", vocabularyEntity.getMeaning())
+                .param("example", vocabularyEntity.getExample())
+                .update();
 
         return this.findByName(vocabularyEntity.getName());
     }
@@ -60,17 +56,14 @@ public class VocabularyRepositoryImpl implements VocabularyRepository {
     public Optional<VocabularyEntity> update(VocabularyEntity vocabularyEntity) {
         jdbcClient.sql("""
                     UPDATE VOCABULARY
-                    SET name = ?, mean = ?, example = ?
-                    WHERE id = ?
+                    SET name = :name, meaning = :meaning, example = :example
+                    WHERE id = :id
                     """)
-                .params(
-                        List.of(
-                                vocabularyEntity.getName(),
-                                vocabularyEntity.getMean(),
-                                vocabularyEntity.getExample(),
-                                vocabularyEntity.getId()
-                        )
-                ).update();
+                .param("name", vocabularyEntity.getName())
+                .param("meaning", vocabularyEntity.getMeaning())
+                .param("example", vocabularyEntity.getExample())
+                .param("id", vocabularyEntity.getId())
+                .update();
 
         return this.findById(vocabularyEntity.getId());
     }

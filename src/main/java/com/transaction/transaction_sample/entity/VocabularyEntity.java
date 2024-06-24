@@ -12,7 +12,7 @@ public class VocabularyEntity {
     private final Long id;
     private String name;
     private String example;
-    private String mean;
+    private String meaning;
     private final Date createdAt;
     private final Date updatedAt;
 
@@ -21,7 +21,7 @@ public class VocabularyEntity {
                 .id(id)
                 .name(name)
                 .example(example)
-                .mean(mean)
+                .meaning(meaning)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();

@@ -21,26 +21,22 @@ public class VocabularyService {
 
     @Transactional
     public VocabularyDto update(VocabularyDto vocabularyDto) {
-  VocabularyEntity vocabularyEntity = vocabularyRepository
+        VocabularyEntity vocabularyEntity = vocabularyRepository
                 .findById(vocabularyDto.getId())
                 .orElseThrow(() -> new RuntimeException("Does't find id="+vocabularyDto.getId()));
         vocabularyEntity.setExample(vocabularyDto.getExample());
         vocabularyEntity.setName(vocabularyDto.getName());
-        vocabularyEntity.setMean(vocabularyDto.getMean());
-        vocabularyRepository.update(vocabularyEntity).get();
-        throw new RuntimeException("aaa");
-//        return null;
+        vocabularyEntity.setMeaning(vocabularyDto.getMeaning());
+        return vocabularyRepository.update(vocabularyEntity).get().toDto();
     }
     @Transactional
     public VocabularyDto save(VocabularyDto vocabularyDto) {
         VocabularyEntity vocabularyEntity = VocabularyEntity.builder()
                 .name(vocabularyDto.getName())
-                .mean(vocabularyDto.getMean())
+                .meaning(vocabularyDto.getMeaning())
                 .example(vocabularyDto.getExample())
                 .build();
-        vocabularyRepository.insert(vocabularyEntity).get();
-//        throw new RuntimeException("aaa");
-        return null;
+        return vocabularyRepository.insert(vocabularyEntity).get().toDto();
     }
 
     @Transactional
@@ -51,7 +47,7 @@ public class VocabularyService {
             }
             VocabularyEntity vocabularyEntity = VocabularyEntity.builder()
                     .name("test_" + i)
-                    .mean("test_" + i)
+                    .meaning("test_" + i)
                     .example("test_" + i)
                     .build();
             vocabularyRepository.insert(vocabularyEntity);

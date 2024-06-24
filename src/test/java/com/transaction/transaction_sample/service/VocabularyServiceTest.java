@@ -14,24 +14,24 @@ public class VocabularyServiceTest {
     @Test
     public void testOK() {
         VocabularyDto vocabularyDto = vocabularyService.get("car");
-        Assertions.assertEquals("車", vocabularyDto.getMean());
-        vocabularyDto.setMean("クルマ");
+        Assertions.assertEquals("車", vocabularyDto.getMeaning());
+        vocabularyDto.setMeaning("クルマ");
         try {
             vocabularyService.update(vocabularyDto);
         } catch (RuntimeException e) {
             // Nothing
         }
-        Assertions.assertEquals("車", vocabularyService.get("car").getMean());
+        Assertions.assertEquals("車", vocabularyService.get("car").getMeaning());
     }
     @Test
     public void testOK2() {
         VocabularyDto dto = VocabularyDto.builder()
                 .name("test")
                 .example("test")
-                .mean("test")
+                .meaning("test")
                 .build();
         vocabularyService.save(dto);
-        Assertions.assertEquals("test", vocabularyService.get("test").getMean());
+        Assertions.assertEquals("test", vocabularyService.get("test").getMeaning());
     }
 
     @Test
